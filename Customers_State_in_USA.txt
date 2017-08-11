@@ -1,0 +1,5 @@
+SELECT Customers.Region, COUNT(Customers.Region) AS NumCustomers
+FROM Customers
+WHERE Customers.Country = 'USA'
+GROUP BY Customers.Region
+ORDER BY NumCustomers DESC;

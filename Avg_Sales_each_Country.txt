@@ -1,0 +1,5 @@
+SELECT Customers.Country, AVG(OrderDetails.UnitPrice * OrderDetails.Quantity - OrderDetails.Discount) AvgTotalSales
+FROM Customers JOIN OrderDetails JOIN Orders
+ON Customers.CustomerID = Orders.CustomerID AND Orders.OrderId = OrderDetails.OrderID
+GROUP BY Customers.Country
+ORDER BY AvgTotalSales DESC;

@@ -1,0 +1,14 @@
+SELECT Products.ProductName, count(Products.ProductID) AS NumMostEffePro
+FROM Products JOIN OrderDetails JOIN Orders 
+			  JOIN (SELECT Customers.CustomerID, Customers.CompanyName, 
+			        SUM(OrderDetails.UnitPrice * OrderDetails.Quantity - OrderDetails.Discount) as Total
+			        FROM Orders join OrderDetails join Customers
+                    ON Orders.OrderID = OrderDetails.OrderID and Orders.CustomerID = Customers.CustomerID
+                    GROUP BY Customers.CustomerID
+                    ORDER BY Total DESC
+                    Limit 5) AS BestCustomers
+ON BestCustomers.CustomerID = Orders.CustomerID AND Orders.OrderId = OrderDetails.OrderID 
+   AND OrderDetails.ProductID = Products.ProductID
+GROUP BY Products.ProductID
+ORDER BY NumMostEffePro DESC
+LIMIT 10;
